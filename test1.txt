@@ -1,1 +1,133 @@
-BBW
+
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as ec
+import time
+import os
+#import pdb;pdb.set_trace()
+options=Options()
+options.add_argument('start-maximized')
+url0=    'https://www.myntra.com/login?referer=https://www.myntra.com/?utm_source=dms_google&utm_medium=searchbrand_cpc&utm_campaign=dms_google_searchbrand_cpc_Search_Brand_Myntra_Brand_India_BM_TROAS_SOK_New&gclid=EAIaIQobChMIsbquo4O3ggMVpdUWBR2xVgMxEAAYASAAEgLCdvD_BwE'
+url1='https://www.myntra.com/?utm_source=dms_google&utm_medium=searchbrand_cpc&utm_campaign=dms_google_searchbrand_cpc_Search_Brand_Myntra_Brand_India_BM_TROAS_SOK_New&gclid=EAIaIQobChMIlvSL6L6iggMVXSaDAx1fDQ_fEAAYASAAEgL4PfD_BwE'
+url2 ='https://www.myntra.com/smart-watches/noise/noise-black-color-fit-icon-2-calling-smartwatch/20795172/buy'#add to cart watch'
+url3 = 'https://www.myntra.com/jeans/snitch/snitch-men-black-skinny-fit-stretchable-jeans/20889800/buy'#add to cart jeans
+url4 = 'https://www.myntra.com/tshirts/roadster/roadster-men-olive-green-solid-round-neck-pure-cotton-t-shirt/1996781/buy'
+url5 = 'https://www.myntra.com/sports-shoes/hrx+by+hrithik+roshan/hrx-by-hrithik-roshan-men-white-and-blue-memory-foam-technology-running-shoes/23484790/buy'
+url6 = 'https://www.myntra.com/sarees/sangria/sangria-yellow--red-bandhani-saree/23366160/buy'
+driver=webdriver.Chrome(options=options, executable_path=r'C:\Users\USER\PycharmProjects\driver\chromedriver.exe')
+directory = 'myntra'
+os.chdir('C:\\Users\\USER\\PycharmProjects\\image\\myntra')
+if not os.path.exists(directory):
+    os.makedirs(directory)
+    filename = directory + '\\' + 'firstpage.png'
+    filename = str(filename)
+    driver.save_screenshot(filename)
+
+
+def open_new_tab(url):
+    driver.execute_script("window.open('about:blank', 'tab2');")
+    driver.switch_to.window("tab2")
+    driver.get(url)
+
+def login():
+    driver.get(url0)
+    time.sleep(3)
+    driver.find_element_by_xpath('//*[@id="reactPageContent"]/div/div/div[2]/div[2]/div[1]/input').click()
+    time.sleep(3)
+    driver.find_element_by_xpath('//*[@id="reactPageContent"]/div/div/div[2]/div[2]/div[1]/input').send_keys('8148672852')
+    time.sleep(3)
+    driver.find_element_by_xpath('//*[@id="reactPageContent"]/div/div/div[2]/div[2]/div[3]').click()
+    time.sleep(60)
+    driver.find_element_by_xpath('//*[@id="reactPageContent"]/div/div/div[2]/div[2]/div[3]').click()
+    time.sleep(60)
+    import pdb;pdb.set_trace()
+# login()
+
+
+def process(my_fav):
+    open_new_tab(url1)
+    driver.find_element_by_xpath('//*[@id="desktop-header-cnt"]/div[2]/div[3]/input').click()
+    time.sleep(3)
+    driver.find_element_by_xpath('//*[@id="desktop-header-cnt"]/div[2]/div[3]/input').send_keys(my_fav)
+    time.sleep(3)
+    driver.find_element_by_xpath('//*[@id="desktop-header-cnt"]/div[2]/div[3]/a/span').click()
+    time.sleep(3)
+    driver.find_element_by_xpath('//*[@id="desktop-header-cnt"]/div[2]/div[3]/input').click()
+    filename = directory + '\\' + my_fav +'_1.png'
+    filename = str(filename)
+    driver.save_screenshot(filename)
+    try:
+        driver.find_element_by_xpath('//*[@id="desktopSearchResults"]/div[2]/section/ul/li[1]/a').click()
+    except:
+        try:
+            driver.find_element_by_xpath('//*[@id="desktopSearchResults"]/div[2]/section/ul/li[3]/a/div[2]').click()
+        except:
+            try:
+                driver.find_element_by_xpath('//*[@id="desktopSearchResults"]/div[2]/section/ul/li[1]/a/div[2]').click()
+            except:
+                try:
+                    driver.find_element_by_xpath('//*[@id="desktopSearchResults"]/div[2]/section/ul/li[1]/a/div[2]').click()
+                except:
+                    driver.find_element_by_xpath('//*[@id="desktopSearchResults"]/div[2]/section/ul/li[1]/a/div[2]').click()
+
+    if my_fav == 'watch':
+        driver.get(url2)
+        time.sleep(3)
+    elif my_fav == 'jeans':  # for next product click
+        driver.get(url3)
+        time.sleep(5)
+        driver.find_element_by_xpath('//*[@id="sizeButtonsContainer"]/div[2]/div[2]/div[1]/button').click()  # size
+        time.sleep(2)
+    elif my_fav == 'tshirt':
+        driver.get(url4)
+        time.sleep(3)
+        driver.find_element_by_xpath('//*[@id="sizeButtonsContainer"]/div[2]/div[2]/div[1]/button/p').click()
+        time.sleep(2)
+    elif my_fav == 'shoe':
+        driver.get(url5)
+        time.sleep(3)
+        driver.find_element_by_xpath('//*[@id="sizeButtonsContainer"]/div[2]/div[4]/div[1]/button').click()
+        time.sleep(3)
+    elif my_fav == 'saree':
+        driver.get(url6)
+    try:
+        driver.find_element_by_xpath('//*[@id="mountRoot"]/div/div[1]/main/div[2]/div[2]/div[2]/div[3]/div/div[1]').click()
+        time.sleep(15)
+    except:
+        try:
+            driver.find_element_by_xpath('//*[@id="mountRoot"]/div/div[1]/main/div[2]/div[2]/div[2]/div[2]/div/div[1]').click()
+            time.sleep(3)
+        except:
+            try:
+                driver.find_element_by_xpath('//*[@id="mountRoot"]/div/div[1]/main/div[2]/div[2]/div[2]/div[2]/div/div[1]').click()
+                time.sleep(3)
+            except:
+                try:
+                    driver.find_element_by_xpath('//*[@id="mountRoot"]/div/div[1]/main/div[2]/div[2]/div[2]/div[2]/div/div[1]').click()
+                    time.sleep(3)
+                except:
+                    driver.execute_script("window.scrollBy(0,130)", "")
+                    driver.find_element_by_xpath('//*[@id="mountRoot"]/div/div[1]/main/div[2]/div[2]/div[2]/div[3]/div/div[1]').click()
+                    time.sleep(10)
+
+    filename = directory + '\\' + my_fav +'_indiv.png'
+    filename = str(filename)
+    driver.save_screenshot(filename)
+    driver.back()
+
+nank=['watch','jeans','tshirt','shoe','saree']
+for n in nank:
+    process(n)
+def add_cart():
+    driver.get(url5)
+    time.sleep(3)
+    driver.find_element_by_xpath('//*[@id="desktop-header-cnt"]/div[2]/div[2]/a[2]/span[1]').click()
+    time.sleep(3)
+    driver.execute_script("window.scrollBy(0,700)", "")
+    filename = directory + '\\' + 'addcart.png'
+    filename = str(filename)
+    driver.save_screenshot(filename)
+
+add_cart()
